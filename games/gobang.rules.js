@@ -4,7 +4,7 @@ var gobangRules = {
 	author: '王集鹄', // 作者
 	players: ['black', 'white'], // 玩家类型
 	turnOrder: ['black', 'white'], // 执棋顺序
-    drop: true,
+    drop: true, // 空投执棋
 	symmetry: { 
 		points: { // 对称坐标
 			white: function(point, grid){
