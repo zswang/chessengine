@@ -1,9 +1,9 @@
 var AceChess = typeof exports == 'undefined' ? {} : exports;
+
 void function (exports){
     /**
      * Ace Chess
      * 棋类游戏引擎
-     * @see 
      * @author 王集鹄(WangJihu, http://weibo.com/zswang)
      * @version 1.0
      */
@@ -16,7 +16,7 @@ void function (exports){
      *   @field{String} author 作者
      *   @field{Array[String]} players 玩家类型
      *   @field{Array[String]} turnOrder 执棋顺序
-     *   @field{Boolean} checkmated 不能送将
+     *   @field{String} checkmated 关键棋子类型
      *   @field{String} directions 方位
      *   @field{Object} symmetry 对称数据
      *      @field{Object} points 对称坐标
@@ -31,8 +31,10 @@ void function (exports){
     
     /**
      * 移动棋子
+     * @param{Array} from 来源坐标
+     * @param{Array} to 目标坐标
      */
-    Chess.prototype.move = function(from, to, record){
+    Chess.prototype.move = function(from, to){
         var fromItem = this.points[from];
         var toItem = this.points[to];
         if (!fromItem) return;
@@ -50,11 +52,13 @@ void function (exports){
     
     /**
      * 空投
+     * @param{Array} to 目标坐标
+     * @param{String} piece 棋子类型
      */
-    Chess.prototype.drop = function(to, piece, player){
+    Chess.prototype.drop = function(to, piece){
         this.points[to] = {
             piece: piece,
-            player: player
+            player: this.getCurrPlayer()
         };
         this.step++;
         //emit('drop');
@@ -62,6 +66,7 @@ void function (exports){
     
     /**
      * 休眠
+     * @param{Array} from 来源坐标
      */
     Chess.prototype.sleep = function(from){
         var fromItem = this.points[from];
@@ -76,8 +81,12 @@ void function (exports){
 
     /**
      * 计算可以移动到的坐标
+     * @param{Array} point 坐标
+     * @param{Object} movePoints 坐标
+     * @param{Boolean} ignoreWarning 是否忽略警告
+     * @return{Boolean} 是否可移动
      */
-    Chess.prototype.calcMoves = function(point, movePoints, checkmated){
+    Chess.prototype.calcMoves = function(point, movePoints, ignoreWarning){
         if (!point || !movePoints) return;
         var result;
         var item = this.points[point];
@@ -85,15 +94,46 @@ void function (exports){
         var moves = this.rules.pieces[item.piece].moves;
         moves = moves instanceof Array ? moves : [moves];
         for (var i = 0; i < moves.length; i++){
-            if (this.calcMove(point, moves[i], movePoints, checkmated)) result = true;
+            if (this.calcMove(point, moves[i], movePoints, ignoreWarning)) result = true;
         }
         return result;
     };
     
     /**
-     * 计算可以选择的坐标
+     * 计算可以空降的坐标
+     * @param{Object} movePoints 坐标
+     * @return{Boolean} 是否可移动
      */
-    Chess.prototype.calcActive = function(activePoints, checkmated){
+    Chess.prototype.calcDrops = function(movePoints){
+        if (!movePoints) return;
+        var result;
+        for (var piece in this.rules.pieces){
+            var drops = this.rules.pieces[piece].drops;
+            if (!drops) continue;
+            for (var i = 0; i < this.rules.board.grid[0]; i++){
+                for (var j = 0; j < this.rules.board.grid[1]; j++){
+                    var pos = [i, j];
+                    var item = this.points[pos];
+                    if (drops.empty == '=' && item) continue; // 必须空子
+                    if (drops.empty == '!' && !item) continue; // 必须非空
+                    if (drops.piece && item && item.piece != item.piece) continue; // 必须某种棋子
+                    if (drops.zone && !this.posInZone(item.player, tryPos2, verify[j].zone)) continue; // 指定区域
+                    if (drops.friend == "=" && item && this.getCurrPlayer() != item.player) continue; // 必须盟友
+                    if (drops.friend == "!" && item && this.getCurrPlayer() == item.player) continue; // 必须非盟友
+                    movePoints[pos] = piece;
+                    result = true;
+                }
+            }
+        }
+        return result;
+    };
+
+    /**
+     * 计算可以选择的坐标
+     * @param{Object} activePoints 可选的子
+     * @return{Boolean} 是否可选
+     */
+    Chess.prototype.calcActive = function(activePoints){
         if (!activePoints) return;
         var result;
         for (var i = 0; i < this.rules.board.grid[1]; i++){
@@ -102,7 +142,7 @@ void function (exports){
                 var item = this.points[pos];
                 if (!item || item.player != this.getCurrPlayer()) continue;
                 var movePoints = {};
-                if (this.calcMoves(pos, movePoints, checkmated)){
+                if (this.calcMoves(pos, movePoints)){
                     activePoints[pos] = movePoints;
                     result = true;
                 }
@@ -113,19 +153,23 @@ void function (exports){
 
     /**
      * 计算可以移动到的坐标
+     * @param{Array} point 坐标
+     * @param{Array} move 移动的方式列表
+     * @param{Object} movePoints 可移动的坐标
+     * @param{Boolean} ignoreWarning 是否忽略警告
+     * @return{Boolean} 是否可移动
      */
-    Chess.prototype.calcMove = function(point, move, movePoints, checkmated){
+    Chess.prototype.calcMove = function(point, move, movePoints, ignoreWarning){
         var result;
         if (!move) return;
         if (typeof move == 'string'){
             var moves = this.rules.pieces[move].moves;
             moves = moves instanceof Array ? moves : [moves];
             for (var i = 0; i < moves.length; i++){
-                if (this.calcMove(point, moves[i], movePoints, checkmated)) result = true;
+                if (this.calcMove(point, moves[i], movePoints, ignoreWarning)) result = true;
             }
             return result;
         }
-        
         var item = this.points[point];
         if (!item) return;
         if (move.zone){ // 起步区域判断
@@ -166,8 +210,8 @@ void function (exports){
                     tryPos = tryPos2;
                     if ((verify[j] && verify[j].berth) || j == directions.length - 1){ // 最后一步
                         if (tryItem && this.rules.pieces[tryItem.piece].shield) break; // 盾牌
-                        // 对方是否威胁王
-                        if (!checkmated || !this.checkmated(point, tryPos2)){
+                        // 如果移动这一步，主将是否收到对方威胁
+                        if (ignoreWarning || !this.rules.checkmated || !this.checkdanger(point, tryPos2)){
                             result = true;
                             movePoints[tryPos2] = true;
                         }
@@ -182,7 +226,14 @@ void function (exports){
         return result;
     };
     
-    Chess.prototype.checkmated = function(from, to){ // 是否存在威胁
+    /**
+     * 预判移动是否危险
+     * @param{Array} from 坐标
+     * @param{Array} to 移动的方式列表
+     * @return{Boolean} 返回是否危险
+     */
+    Chess.prototype.checkdanger = function(from, to){
+        if (!this.rules.checkmated) return;
         var fromItem = this.points[from];
         if (!fromItem) return;
         var result = false;
@@ -195,17 +246,19 @@ void function (exports){
         this.points[from] = null;
         var update = this.rules.pieces[fromItem.piece].update;
         if (fromItem && update && update['move']) fromItem.piece = update['move'];
-        
         result = this.calcWarning();
         // 还原
         fromItem.piece = fromPiece;
         this.points[to] = toItem;
         this.points[from] = fromItem;
-        return result;
+        
+        return result && result[this.rules.checkmated];
     };
     
     /**
      * 计算警告
+     * @param{Object} warning 被警告的坐标
+     * @return{Object} 返回哪些棋子类型受到威胁
      */
     Chess.prototype.calcWarning = function(warning){
         var result;
@@ -215,11 +268,12 @@ void function (exports){
                 var item = this.points[pos];
                 if (!item || item.player == this.getCurrPlayer()) continue;
                 var movePoints = {};
-                this.calcMoves(pos, movePoints);
+                this.calcMoves(pos, movePoints, true);
                 for (var p in movePoints){
                     var tryItem = this.points[p];
                     if (tryItem && tryItem.player == this.getCurrPlayer()){
-                        if (this.rules.pieces[tryItem.piece].warning) result = true;
+                        result = result || {};
+                        result[tryItem.piece] = true;
                         if (warning){
                             warning[p] = warning[p] || {};
                             warning[p][pos] = true;
@@ -232,7 +286,7 @@ void function (exports){
     };
     
     /**
-     * 重新开始游戏
+     * 从新开始游戏
      */
     Chess.prototype.replay = function(){
         this.step = 0; // 移动步数
@@ -262,21 +316,29 @@ void function (exports){
         
         // console.log(this.points);
     };
+    
     /**
      * 获取对称坐标
+     * @param{Array} point 源坐标
+     * @param{String} player 相对玩家视角
+     * @return{Array} 返回对称坐标
      */
     Chess.prototype.symmetryPoint = function(point, player){
         if (!this.rules.symmetry || !this.rules.symmetry.points) return point;
         var item = this.rules.symmetry.points[player];
         if (!item) return point;
         if (typeof item == 'function'){
-            return item(point);
+            return item(point, this.rules.board.grid);
         } else {
             return item[point];
         }
     };
+    
     /**
      * 获取对称方向
+     * @param{Array} direction 方向
+     * @param{String} player 相对玩家视角
+     * @return{Array} 返回对称方向
      */
     Chess.prototype.symmetryDirection = function(direction, player){
         if (!this.rules.symmetry || !this.rules.symmetry.directions) return direction;
@@ -318,6 +380,9 @@ void function (exports){
 
     /**
      * 坐标是否在区域中
+     * @param{String} player 玩家类型
+     * @param{Array} point 坐标
+     * @param{String} zone 区域名
      */
     Chess.prototype.posInZone = function(player, point, zone){
         if (!this.rules.zones) return;

@@ -4,7 +4,7 @@ var chineseChessRules = {
 	author: '王集鹄', // 作者
 	players: ['red', 'black'], // 玩家类型
 	turnOrder: ['red', 'black'], // 执棋顺序
-	checkmated: true, // 不能送将
+	checkmated: 'general', // 不能送将
 	directions: { // 方向
 		"n": [0, -1],
 		"e": [1, 0],
@@ -17,10 +17,10 @@ var chineseChessRules = {
 	},
 	symmetry: { 
 		points: { // 对称坐标
-			black: function(point){
+			black: function(point, grid){
 				return [
-					9 - point[0] - 1,
-					10 - point[1] - 1
+					grid[0] - point[0] - 1,
+					grid[1] - point[1] - 1
 				];
 			}
 		},
@@ -171,7 +171,6 @@ var chineseChessRules = {
 				red: '帅',
 				black: '将'
 			},
-			warning: true, // 关键棋子
 			moves: [{
 				direction: [["n", "n"]],
 				verify: [{

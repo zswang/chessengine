@@ -46,5 +46,5 @@
 .board .black_moveto{cursor:url(black.cur),auto;}
 .board .white_moveto{cursor:url(white.cur),auto;}
 
-.board .piece:hover {border: 1px dotted green;}
+.board .piece:hover {outline: 1px dotted green;}
 
