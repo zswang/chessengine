@@ -219,16 +219,19 @@ void function(exports){
             
             if (("" + this.selected == pos) && // 选中
                 this.theme.control.selected && 
+                this.theme.control.selected[this.engine.getCurrPlayer()] &&
                 this.theme.control.selected[this.engine.getCurrPlayer()][l]){
                 className += " " + this.theme.control.selected[this.engine.getCurrPlayer()][l];
             }
             if (("" + this.from == pos) && // 来源
                 this.theme.control.from &&
+                this.theme.control.from[this.engine.getCurrPlayer()] &&
                 this.theme.control.from[this.engine.getCurrPlayer()][l]){
                 className += " " + this.theme.control.from[this.engine.getPrevPlayer()][l];
             }
             if (("" + this.to == pos) && // 目标
                 this.theme.control.to &&
+                this.theme.control.to[this.engine.getCurrPlayer()] &&
                 this.theme.control.to[this.engine.getCurrPlayer()][l]){
                 className += " " + this.theme.control.to[this.engine.getPrevPlayer()][l];
             }
@@ -236,24 +239,33 @@ void function(exports){
                 if (item.player == this.currPlayer &&
                     this.activePoints[pos] &&
                     this.theme.control.activity &&
+                    this.theme.control.activity[this.engine.getCurrPlayer()] &&
                     this.theme.control.activity[this.engine.getCurrPlayer()][l]){ // 当前的棋子
                     className += " " + this.theme.control.activity[this.engine.getCurrPlayer()][l];
                 }
                 if (this.movePoints[pos]){ // 可以移动
-                    if (this.theme.control.killer[item.player][l])
+                    if (this.theme.control.killer[item.player] &&
+                        this.theme.control.killer[item.player][l]){
                         className += " " + this.theme.control.killer[item.player][l];
-                    if (!this.theme.control.moveto[this.engine.getCurrPlayer()][l])
-                        className += " " + this.theme.control.moveto[this.engine.getCurrPlayer()][l];
+                    }
                 }
                 if (this.warning[pos] && item){ // 受到危险
                     if (item.piece == this.rules.checkmated &&
+                        this.theme.control.warning[item.player] &&
                         this.theme.control.warning[item.player][l]){
                         className += " " + this.theme.control.warning[item.player][l];
                     }
                 }
-                console.log(item.piece);
-                if (this.theme.pieces[item.piece][item.player][l]){
+                if (this.theme.pieces[item.piece][item.player] &&
+                    this.theme.pieces[item.piece][item.player][l]){
                     className += " " + this.theme.pieces[item.piece][item.player][l];
+                }
+            } else {
+                if (this.movePoints[pos]){ // 可以移动
+                    if (this.theme.control.moveto[this.engine.getCurrPlayer()] &&
+                        this.theme.control.moveto[this.engine.getCurrPlayer()][l]){
+                        className += " " + this.theme.control.moveto[this.engine.getCurrPlayer()][l];
+                    }
                 }
             }
             if (className != this.div_layers[[pos, l]].className){
