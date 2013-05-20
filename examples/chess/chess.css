@@ -1,0 +1,63 @@
+/* ÆåÅÌ */
+.board{background:url(board.gif) no-repeat;position:relative;width:459px;height:510px;}
+.board .piece{width:50px;height:50px;position:absolute;}
+.board .chess{background:url(chess.gif) no-repeat;}
+
+/* ÇøÓò×ø±ê */
+.board .a1,.board .a2,.board .a3,.board .a4,.board .a5,.board .a6,.board .a7,.board .a8,.board .a9,.board .a10{left:005px;}
+.board .b1,.board .b2,.board .b3,.board .b4,.board .b5,.board .b6,.board .b7,.board .b8,.board .b9,.board .b10{left:055px;}
+.board .c1,.board .c2,.board .c3,.board .c4,.board .c5,.board .c6,.board .c7,.board .c8,.board .c9,.board .c10{left:105px;}
+.board .d1,.board .d2,.board .d3,.board .d4,.board .d5,.board .d6,.board .d7,.board .d8,.board .d9,.board .d10{left:155px;}
+.board .e1,.board .e2,.board .e3,.board .e4,.board .e5,.board .e6,.board .e7,.board .e8,.board .e9,.board .e10{left:205px;}
+.board .f1,.board .f2,.board .f3,.board .f4,.board .f5,.board .f6,.board .f7,.board .f8,.board .f9,.board .f10{left:255px;}
+.board .g1,.board .g2,.board .g3,.board .g4,.board .g5,.board .g6,.board .g7,.board .g8,.board .g9,.board .g10{left:305px;}
+.board .h1,.board .h2,.board .h3,.board .h4,.board .h5,.board .h6,.board .h7,.board .h8,.board .h9,.board .h10{left:355px;}
+.board .i1,.board .i2,.board .i3,.board .i4,.board .i5,.board .i6,.board .i7,.board .i8,.board .i9,.board .i10{left:405px;}
+
+.board .a1,.board .b1,.board .c1,.board .d1,.board .e1,.board .f1,.board .g1,.board .h1,.board .i1{top:005px;}
+.board .a2,.board .b2,.board .c2,.board .d2,.board .e2,.board .f2,.board .g2,.board .h2,.board .i2{top:055px;}
+.board .a3,.board .b3,.board .c3,.board .d3,.board .e3,.board .f3,.board .g3,.board .h3,.board .i3{top:105px;}
+.board .a4,.board .b4,.board .c4,.board .d4,.board .e4,.board .f4,.board .g4,.board .h4,.board .i4{top:155px;}
+.board .a5,.board .b5,.board .c5,.board .d5,.board .e5,.board .f5,.board .g5,.board .h5,.board .i5{top:205px;}
+.board .a6,.board .b6,.board .c6,.board .d6,.board .e6,.board .f6,.board .g6,.board .h6,.board .i6{top:255px;}
+.board .a7,.board .b7,.board .c7,.board .d7,.board .e7,.board .f7,.board .g7,.board .h7,.board .i7{top:305px;}
+.board .a8,.board .b8,.board .c8,.board .d8,.board .e8,.board .f8,.board .g8,.board .h8,.board .i8{top:355px;}
+.board .a9,.board .b9,.board .c9,.board .d9,.board .e9,.board .f9,.board .g9,.board .h9,.board .i9{top:405px;}
+
+.board .a10,.board .b10,.board .c10,.board .d10,.board .e10,.board .f10,.board .g10,.board .h10,.board .i10{top:455px;}
+
+/* Æå×Ó */
+.board .red_soldier{background-position:-300px 0;}
+.board .black_soldier{background-position:-300px -50px;}
+.board .red_horse{background-position:-150px 0;}
+.board .black_horse{background-position:-150px -50px;}
+.board .red_elephant{background-position:-100px 0;}
+.board .black_elephant{background-position:-100px -50px;}
+.board .red_chariot{background-position:-200px 0;}
+.board .black_chariot{background-position:-200px -50px;}
+.board .red_mandarin{background-position:-50px 0;}
+.board .black_mandarin{background-position:-50px -50px;}
+.board .red_cannon{background-position:-250px 0;}
+.board .black_cannon{background-position:-250px -50px;}
+.board .red_general{background-position:0 0;}
+.board .black_general{background-position:0 -50px;}
+.board .red_tiger{background-position:-100px -150px;}
+.board .black_tiger{background-position:-150px -150px;}
+.board .red_rock{background-position:0 -150px;}
+.board .black_rock{background-position:-50px -150px;}
+
+
+/* Ñ¡¿ò */
+.board .selected{background-position:0 -100px;}
+.board .moved,.board .from,.board .to{background-position:-50px -100px;}
+.board .activity{cursor:pointer;}
+.board .killer{cursor:url(kill.cur),auto;}
+.board .moveto{cursor:url(footprint.cur),auto;}
+
+/* ×´Ì¬ */
+.board .sleep{background-position:-300px -100px;}
+.board .shield{background-position:-250px -100px;}
+.board .danger{background-position:-200px -100px;}
+.board .warning{background-position:-200px -100px;}
+
+.board .piece:hover {outline: 1px dotted gray;}

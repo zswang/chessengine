@@ -1,0 +1,50 @@
+/* 棋盘 */
+.board{background:url(gobang_board.gif) no-repeat;position:relative;width:510px;height:510px;}
+.board .piece{width:34px;height:34px;position:absolute;}
+.board .chess{background:url(gobang_corner.gif) no-repeat;}
+
+/* 区域坐标 */
+.board .a1,.board .a2,.board .a3,.board .a4,.board .a5,.board .a6,.board .a7,.board .a8,.board .a9,.board .a10,.board .a11,.board .a12,.board .a13,.board .a14,.board .a15{left:000px;}
+.board .b1,.board .b2,.board .b3,.board .b4,.board .b5,.board .b6,.board .b7,.board .b8,.board .b9,.board .b10,.board .b11,.board .b12,.board .b13,.board .b14,.board .b15{left:034px;}
+.board .c1,.board .c2,.board .c3,.board .c4,.board .c5,.board .c6,.board .c7,.board .c8,.board .c9,.board .c10,.board .c11,.board .c12,.board .c13,.board .c14,.board .c15{left:068px;}
+.board .d1,.board .d2,.board .d3,.board .d4,.board .d5,.board .d6,.board .d7,.board .d8,.board .d9,.board .d10,.board .d11,.board .d12,.board .d13,.board .d14,.board .d15{left:102px;}
+.board .e1,.board .e2,.board .e3,.board .e4,.board .e5,.board .e6,.board .e7,.board .e8,.board .e9,.board .e10,.board .e11,.board .e12,.board .e13,.board .e14,.board .e15{left:136px;}
+.board .f1,.board .f2,.board .f3,.board .f4,.board .f5,.board .f6,.board .f7,.board .f8,.board .f9,.board .f10,.board .f11,.board .f12,.board .f13,.board .f14,.board .f15{left:170px;}
+.board .g1,.board .g2,.board .g3,.board .g4,.board .g5,.board .g6,.board .g7,.board .g8,.board .g9,.board .g10,.board .g11,.board .g12,.board .g13,.board .g14,.board .g15{left:204px;}
+.board .h1,.board .h2,.board .h3,.board .h4,.board .h5,.board .h6,.board .h7,.board .h8,.board .h9,.board .h10,.board .h11,.board .h12,.board .h13,.board .h14,.board .h15{left:238px;}
+.board .i1,.board .i2,.board .i3,.board .i4,.board .i5,.board .i6,.board .i7,.board .i8,.board .i9,.board .i10,.board .i11,.board .i12,.board .i13,.board .i14,.board .i15{left:272px;}
+.board .j1,.board .j2,.board .j3,.board .j4,.board .j5,.board .j6,.board .j7,.board .j8,.board .j9,.board .j10,.board .j11,.board .j12,.board .j13,.board .j14,.board .j15{left:306px;}
+.board .k1,.board .k2,.board .k3,.board .k4,.board .k5,.board .k6,.board .k7,.board .k8,.board .k9,.board .k10,.board .k11,.board .k12,.board .k13,.board .k14,.board .k15{left:340px;}
+.board .l1,.board .l2,.board .l3,.board .l4,.board .l5,.board .l6,.board .l7,.board .l8,.board .l9,.board .l10,.board .l11,.board .l12,.board .l13,.board .l14,.board .l15{left:374px;}
+.board .m1,.board .m2,.board .m3,.board .m4,.board .m5,.board .m6,.board .m7,.board .m8,.board .m9,.board .m10,.board .m11,.board .m12,.board .m13,.board .m14,.board .m15{left:408px;}
+.board .n1,.board .n2,.board .n3,.board .n4,.board .n5,.board .n6,.board .n7,.board .n8,.board .n9,.board .n10,.board .n11,.board .n12,.board .n13,.board .n14,.board .n15{left:442px;}
+.board .o1,.board .o2,.board .o3,.board .o4,.board .o5,.board .o6,.board .o7,.board .o8,.board .o9,.board .o10,.board .o11,.board .o12,.board .o13,.board .o14,.board .o15{left:476px;}
+
+.board .a1,.board .b1,.board .c1,.board .d1,.board .e1,.board .f1,.board .g1,.board .h1,.board .i1,.board .j1,.board .k1,.board .l1,.board .m1,.board .n1,.board .o1{top:000px;}
+.board .a2,.board .b2,.board .c2,.board .d2,.board .e2,.board .f2,.board .g2,.board .h2,.board .i2,.board .j2,.board .k2,.board .l2,.board .m2,.board .n2,.board .o2{top:034px;}
+.board .a3,.board .b3,.board .c3,.board .d3,.board .e3,.board .f3,.board .g3,.board .h3,.board .i3,.board .j3,.board .k3,.board .l3,.board .m3,.board .n3,.board .o3{top:068px;}
+.board .a4,.board .b4,.board .c4,.board .d4,.board .e4,.board .f4,.board .g4,.board .h4,.board .i4,.board .j4,.board .k4,.board .l4,.board .m4,.board .n4,.board .o4{top:102px;}
+.board .a5,.board .b5,.board .c5,.board .d5,.board .e5,.board .f5,.board .g5,.board .h5,.board .i5,.board .j5,.board .k5,.board .l5,.board .m5,.board .n5,.board .o5{top:136px;}
+.board .a6,.board .b6,.board .c6,.board .d6,.board .e6,.board .f6,.board .g6,.board .h6,.board .i6,.board .j6,.board .k6,.board .l6,.board .m6,.board .n6,.board .o6{top:170px;}
+.board .a7,.board .b7,.board .c7,.board .d7,.board .e7,.board .f7,.board .g7,.board .h7,.board .i7,.board .j7,.board .k7,.board .l7,.board .m7,.board .n7,.board .o7{top:204px;}
+.board .a8,.board .b8,.board .c8,.board .d8,.board .e8,.board .f8,.board .g8,.board .h8,.board .i8,.board .j8,.board .k8,.board .l8,.board .m8,.board .n8,.board .o8{top:238px;}
+.board .a9,.board .b9,.board .c9,.board .d9,.board .e9,.board .f9,.board .g9,.board .h9,.board .i9,.board .j9,.board .k9,.board .l9,.board .m9,.board .n9,.board .o9{top:272px;}
+
+.board .a10,.board .b10,.board .c10,.board .d10,.board .e10,.board .f10,.board .g10,.board .h10,.board .i10,.board .j10,.board .k10,.board .l10,.board .m10,.board .n10,.board .o10{top:306px;}
+.board .a11,.board .b11,.board .c11,.board .d11,.board .e11,.board .f11,.board .g11,.board .h11,.board .i11,.board .j11,.board .k11,.board .l11,.board .m11,.board .n11,.board .o11{top:340px;}
+.board .a12,.board .b12,.board .c12,.board .d12,.board .e12,.board .f12,.board .g12,.board .h12,.board .i12,.board .j12,.board .k12,.board .l12,.board .m12,.board .n12,.board .o12{top:374px;}
+.board .a13,.board .b13,.board .c13,.board .d13,.board .e13,.board .f13,.board .g13,.board .h13,.board .i13,.board .j13,.board .k13,.board .l13,.board .m13,.board .n13,.board .o13{top:408px;}
+.board .a14,.board .b14,.board .c14,.board .d14,.board .e14,.board .f14,.board .g14,.board .h14,.board .i14,.board .j14,.board .k14,.board .l14,.board .m14,.board .n14,.board .o14{top:442px;}
+.board .a15,.board .b15,.board .c15,.board .d15,.board .e15,.board .f15,.board .g15,.board .h15,.board .i15,.board .j15,.board .k15,.board .l15,.board .m15,.board .n15,.board .o15{top:476px;}
+
+/* 棋子 */
+.board .black_stone{background-position:-102px -68px;}
+.board .white_stone{background-position:-102px -34px;}
+
+
+/* 选框 */
+.board .black_moveto{cursor:url(black.cur),auto;}
+.board .white_moveto{cursor:url(white.cur),auto;}
+
+.board .piece:hover {border: 1px dotted green;}
+

@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <meta name="author" content="http//weibo.com/zswang" />
+    <title>Demo</title>
+	<link type="text/css" rel="Stylesheet" href="../chess/chess.css"/>
+	<script src="../../scripts/ace-chess.js"></script>
+	<script src="../../games/chinesechess.rules.js"></script>
+	<script src="../../games/chinesechess.theme.js"></script>
+	<script src="../../scripts/ace-chess-control.js"></script>
+	<style>
+#box1,#box2{
+	float: left;
+}
+	</style>
+</head>
+<body>
+	<div id="box1"></div>
+	<div id="box2"></div>
+	<input type="button" id="nextAngle" value="视角"/>
+	<input type="button" id="redPlayer" value="执红子"/>
+	<input type="button" id="blackPlayer" value="执黑子"/>
+	<input type="button" id="seePlayer" value="旁观"/>
+    <script>
+void function(){
+	
+    /**
+     * @see 
+     * @author 王集鹄(wangjihu,http//weibo.com/zswang)
+     * @version 2012-00-00
+     */
+	var controlRed = AceChessControl.create({
+		rules: chineseChessRules, 
+		theme: chineseChessTheme,
+		currPlayer: 'red',
+		parent: document.getElementById('box1'),
+		oncommand: function(data){
+			controlBlack.command(data);
+		}
+	});
+	var controlBlack = AceChessControl.create({
+		rules: chineseChessRules, 
+		theme: chineseChessTheme,
+		currPlayer: 'black',
+		angleIndex: 1,
+		parent: document.getElementById('box2'),
+		oncommand: function(data){
+			controlRed.command(data);
+		}
+	});
+	document.getElementById('nextAngle').onclick = function(){
+		controlRed.nextAngle();
+		controlBlack.nextAngle();
+	};
+}();
+    </script>
+</body>
+</html>
