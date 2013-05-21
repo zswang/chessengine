@@ -10,6 +10,10 @@ var gobangTheme = {
 		to: { // 目标
 			black: { 0: "chess to" },
 			white: { 0: "chess to" }
+		},
+		moveto: {
+			black: { 0: "black_moveto" },
+			white: { 0: "white_moveto" }
 		}
 	},
 	pieces: {

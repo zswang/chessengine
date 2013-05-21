@@ -45,6 +45,7 @@
 /* Ñ¡¿ò */
 .board .black_moveto{cursor:url(black.cur),auto;}
 .board .white_moveto{cursor:url(white.cur),auto;}
+.board .to{background-position:-34px -102px;}
 
 .board .piece:hover {outline: 1px dotted green;}
 

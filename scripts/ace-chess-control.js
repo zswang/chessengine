@@ -216,27 +216,29 @@ void function(exports){
                     this.theme.chars[0][p[0]] + 
                     this.theme.chars[1][p[1]]; // 位置
             }
-            
-            if (("" + this.selected == pos) && // 选中
-                this.theme.control.selected && 
-                this.theme.control.selected[this.engine.getCurrPlayer()] &&
-                this.theme.control.selected[this.engine.getCurrPlayer()][l]){
-                className += " " + this.theme.control.selected[this.engine.getCurrPlayer()][l];
-            }
-            if (("" + this.from == pos) && // 来源
-                this.theme.control.from &&
-                this.theme.control.from[this.engine.getCurrPlayer()] &&
-                this.theme.control.from[this.engine.getCurrPlayer()][l]){
-                className += " " + this.theme.control.from[this.engine.getPrevPlayer()][l];
-            }
-            if (("" + this.to == pos) && // 目标
-                this.theme.control.to &&
-                this.theme.control.to[this.engine.getCurrPlayer()] &&
-                this.theme.control.to[this.engine.getCurrPlayer()][l]){
-                className += " " + this.theme.control.to[this.engine.getPrevPlayer()][l];
+            if (this.theme.control){
+                if (("" + this.selected == pos) && // 选中
+                    this.theme.control.selected && 
+                    this.theme.control.selected[this.engine.getCurrPlayer()] &&
+                    this.theme.control.selected[this.engine.getCurrPlayer()][l]){
+                    className += " " + this.theme.control.selected[this.engine.getCurrPlayer()][l];
+                }
+                if (("" + this.from == pos) && // 来源
+                    this.theme.control.from &&
+                    this.theme.control.from[this.engine.getCurrPlayer()] &&
+                    this.theme.control.from[this.engine.getCurrPlayer()][l]){
+                    className += " " + this.theme.control.from[this.engine.getPrevPlayer()][l];
+                }
+                if (("" + this.to == pos) && // 目标
+                    this.theme.control.to &&
+                    this.theme.control.to[this.engine.getCurrPlayer()] &&
+                    this.theme.control.to[this.engine.getCurrPlayer()][l]){
+                    className += " " + this.theme.control.to[this.engine.getPrevPlayer()][l];
+                }
             }
             if (item){
-                if (item.player == this.currPlayer &&
+                if (this.theme.control &&
+                    item.player == this.currPlayer &&
                     this.activePoints[pos] &&
                     this.theme.control.activity &&
                     this.theme.control.activity[this.engine.getCurrPlayer()] &&
@@ -244,13 +246,15 @@ void function(exports){
                     className += " " + this.theme.control.activity[this.engine.getCurrPlayer()][l];
                 }
                 if (this.movePoints[pos]){ // 可以移动
-                    if (this.theme.control.killer[item.player] &&
+                    if (this.theme.control &&
+                        this.theme.control.killer[item.player] &&
                         this.theme.control.killer[item.player][l]){
                         className += " " + this.theme.control.killer[item.player][l];
                     }
                 }
                 if (this.warning[pos] && item){ // 受到危险
                     if (item.piece == this.rules.checkmated &&
+                        this.theme.control &&
                         this.theme.control.warning[item.player] &&
                         this.theme.control.warning[item.player][l]){
                         className += " " + this.theme.control.warning[item.player][l];
@@ -262,7 +266,9 @@ void function(exports){
                 }
             } else {
                 if (this.movePoints[pos]){ // 可以移动
-                    if (this.theme.control.moveto[this.engine.getCurrPlayer()] &&
+                    if (this.theme.control &&
+                        this.theme.control.moveto &&
+                        this.theme.control.moveto[this.engine.getCurrPlayer()] &&
                         this.theme.control.moveto[this.engine.getCurrPlayer()][l]){
                         className += " " + this.theme.control.moveto[this.engine.getCurrPlayer()][l];
                     }
